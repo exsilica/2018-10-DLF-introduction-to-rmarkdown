@@ -18,6 +18,7 @@ knitr::opts_chunk$set(include = TRUE) # Do run code chunks.
 library(dplyr)
 library(ggplot2)
 library(lubridate)
+library(magrittr)
 library(pander)
 library(readr)
 ```
@@ -115,13 +116,15 @@ month_with_highest_website_usage <- wifi_events_by_month %>%
   dplyr::filter(event == "website_access") %>% 
   dplyr::top_n(1, number_of_events) %>% 
   dplyr::pull(month) %>% 
-  lubridate::ymd(truncated = 1)
+  lubridate::ymd(truncated = 1) %>% 
+  magrittr::extract(1)
 
 month_with_highest_journal_usage <- wifi_events_by_month %>% 
   dplyr::filter(event == "journal_access") %>% 
   dplyr::top_n(1, number_of_events) %>% 
   dplyr::pull(month) %>% 
-  lubridate::ymd(truncated = 1)
+  lubridate::ymd(truncated = 1) %>% 
+  magrittr::extract(1)
 
 # For information about date format codes, see
 # https://www.statmethods.net/input/dates.html
